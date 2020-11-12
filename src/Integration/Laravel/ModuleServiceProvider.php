@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace ScottSmith\ErrorHandler\Integration\Laravel;
 
-use Bugsnag\Report;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use RuntimeException;
-use ScottSmith\ErrorHandler\Reporter\Interfaces\MetaGeneratorAwareInterface;
-use ScottSmith\ErrorHandler\Reporter\Interfaces\MetaGeneratorInterface;
 use ScottSmith\ErrorHandler\Reporter\NullReporter;
 use ScottSmith\ErrorHandler\Reporter\Interfaces\ReporterInterface;
 

@@ -2,7 +2,9 @@
     "name": "scottsmith/error-handler",
     "type": "library",
     "description": "Error/Exception handler",
-    "homepage": "",
+    "license": "MIT",
+    "homepage": "https://github.com/scottasmith/php-error-handler",
+
     "require": {
         "php": "^7.4|^8.0"
     },
