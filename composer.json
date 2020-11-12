@@ -1,0 +1,27 @@
+{
+    "name": "scottsmith/error-handler",
+    "type": "library",
+    "description": "Error/Exception handler",
+
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "ScottSmith\\ErrorHandler\\": "src/"
+        }
+    },
+
+    "suggest": {
+        "bugsnag/bugsnag-laravel": "Allows to use the error-handler's Bugsnag reporter"
+    },
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ScottSmith\\ErrorHandler\\Integration\\Laravel\\ModuleServiceProvider"
+            ]
+        }
+    }
+}
