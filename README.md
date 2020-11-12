@@ -26,7 +26,7 @@ $reporter->registerMetaGenerator(new class implements MetaGeneratorInterface {
 ```
 
 # Laravel Integration
-##Configuration
+## Configuration
 You need to publish the configuration using `php artisan vendor:publish`.
 
 This allows to update the reporter the ModuleServiceProvider binds as ReporterInterface. 

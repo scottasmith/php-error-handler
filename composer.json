@@ -2,7 +2,7 @@
     "name": "scottsmith/error-handler",
     "type": "library",
     "description": "Error/Exception handler",
-
+    "homepage": "",
     "require": {
         "php": "^7.4|^8.0"
     },
