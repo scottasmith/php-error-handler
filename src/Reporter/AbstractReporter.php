@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ScottSmith\ErrorHandler\Reporter;
 
-use ScottSmith\ErrorHandler\Exception\AbstractApplicationException;
+use ScottSmith\ErrorHandler\Exception\ApplicationException;
 use ScottSmith\ErrorHandler\Reporter\Interfaces\{
     MetaGeneratorAwareInterface,
     MetaGeneratorInterface,
@@ -37,7 +37,7 @@ abstract class AbstractReporter implements ReporterInterface, MetaGeneratorAware
         $vendorData = [
             'error' => [
                 'identifier' => $identifier,
-                'code' => ($throwable instanceof AbstractApplicationException)
+                'code' => ($throwable instanceof ApplicationException)
                     ? $throwable->getApplicationCode()
                     : $throwable->getCode(),
             ],
@@ -47,7 +47,7 @@ abstract class AbstractReporter implements ReporterInterface, MetaGeneratorAware
             $vendorData['metadata'] = $metadata;
         }
 
-        if ($throwable instanceof AbstractApplicationException && $throwable->hasMetaData()) {
+        if ($throwable instanceof ApplicationException && $throwable->hasMetaData()) {
             $vendorData['metadata'] = array_merge($vendorData['metadata'], $throwable->getMetaData());
         }
 

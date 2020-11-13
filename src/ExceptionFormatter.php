@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ScottSmith\ErrorHandler;
 
 use Illuminate\Validation\ValidationException;
-use ScottSmith\ErrorHandler\Exception\AbstractApplicationException;
+use ScottSmith\ErrorHandler\Exception\ApplicationException;
 use Throwable;
 
 class ExceptionFormatter
@@ -20,7 +20,7 @@ class ExceptionFormatter
      */
     public static function getMessage(Throwable $throwable, bool $isDebug = false): string
     {
-         return ($isDebug && $throwable instanceof AbstractApplicationException)
+         return ($isDebug && $throwable instanceof ApplicationException)
             ? $throwable->getMessage()
             : 'An unexpected error has occurred';
     }
@@ -33,7 +33,7 @@ class ExceptionFormatter
      */
     public static function getCode(Throwable $throwable): int
     {
-        return $throwable instanceof AbstractApplicationException
+        return $throwable instanceof ApplicationException
             ? $throwable->getApplicationCode()
             : $throwable->getCode();
     }

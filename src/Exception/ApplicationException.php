@@ -7,7 +7,7 @@ namespace ScottSmith\ErrorHandler\Exception;
 use Exception;
 use Throwable;
 
-abstract class AbstractApplicationException extends Exception
+class ApplicationException extends Exception
 {
     /**
      * @var int
