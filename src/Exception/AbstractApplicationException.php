@@ -10,6 +10,11 @@ use Throwable;
 abstract class AbstractApplicationException extends Exception
 {
     /**
+     * @var int
+     */
+    private int $applicationCode;
+
+    /**
      * Meta to help track the error down
      *
      * @var array
@@ -18,22 +23,23 @@ abstract class AbstractApplicationException extends Exception
 
     /**
      * @param string $template
-     * @param int $code
-     * @param Throwable $previousException
+     * @param int $applicationCode
+     * @param Throwable|null $previousException
      * @param mixed ...$templateParams
-     * @return static
      */
-    public static function createGenericException(
+    public function __construct(
         string $template,
-        int $code,
-        Throwable $previousException,
+        int $applicationCode,
+        Throwable $previousException = null,
         ...$templateParams
-    ): self {
-        return new static(
+    ) {
+        parent::__construct(
             sprintf($template, $templateParams),
-            $code,
+            0,
             $previousException
         );
+
+        $this->applicationCode = $applicationCode;
     }
 
     /**
@@ -73,5 +79,8 @@ abstract class AbstractApplicationException extends Exception
      *
      * @return int
      */
-    abstract public function getApplicationCode(): int;
+    public function getApplicationCode(): int
+    {
+        return $this->applicationCode;
+    }
 }
