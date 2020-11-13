@@ -34,7 +34,7 @@ class ApplicationException extends Exception
         ...$templateParams
     ) {
         parent::__construct(
-            sprintf($template, $templateParams),
+            sprintf($template, ...$templateParams),
             0,
             $previousException
         );
