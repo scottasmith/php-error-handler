@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ScottSmith\ErrorHandler\Integration\Laravel;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 use RuntimeException;
 use ScottSmith\ErrorHandler\Reporter\NullReporter;
@@ -47,6 +48,7 @@ class ModuleServiceProvider extends ServiceProvider
 
     /**
      * @return ReporterInterface
+     * @throws BindingResolutionException
      */
     private function getReporter(): ReporterInterface
     {
@@ -56,7 +58,7 @@ class ModuleServiceProvider extends ServiceProvider
             throw new RuntimeException('reporter must be a valid class: ' . ReporterInterface::class);
         }
 
-        $reporterClass = new $reporter;
+        $reporterClass = $this->app->make($reporter);
         if (!$reporterClass instanceof ReporterInterface) {
             throw new RuntimeException('reporter must be instance of ' . ReporterInterface::class);
         }
