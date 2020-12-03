@@ -15,7 +15,7 @@ There are two supported reporters:
 - NullReporter
 - LaravelBugsnagReporter
 
-The BugsnagReporter extends the AbstractReporter. This allows to extend the metadata:
+The BugsnagReporter extends the `AbstractReporter`. This allows to extend the metadata:
 ```
 $reporter->registerMetaGenerator(new class implements MetaGeneratorInterface {
     public function generateMetaData(): array
@@ -39,4 +39,22 @@ By default, the reporter to be used is the `ScottSmith\ErrorHandler\Reporter\Nul
 To update the reported, simply update the published config `config\errror-handler.php`:
 ```
     'reporter' => \ScottSmith\ErrorHandler\Reporter\LaravelBugsnagReporter::class,
+```
+
+If the reporter extends `AbstractReporter` then you can extend the global data inside your Provider:
+```
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        $this->app->extend(\ScottSmith\ErrorHandler\Reporter\AbstractReporter::class, function($reporter) {
+            $reporter->registerMetaGenerator(new class implements MetaGeneratorInterface {
+                public function generateMetaData(): array
+                {
+                    return ['some' => 'data'];
+                }
+            }
+        });
+    }
+}
 ```

@@ -37,6 +37,7 @@ abstract class AbstractReporter implements ReporterInterface, MetaGeneratorAware
         $vendorData = [
             'error' => [
                 'identifier' => $identifier,
+                'message' => $throwable->getMessage(),
                 'code' => ($throwable instanceof ApplicationException)
                     ? $throwable->getApplicationCode()
                     : $throwable->getCode(),

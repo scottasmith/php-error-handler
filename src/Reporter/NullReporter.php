@@ -11,6 +11,6 @@ class NullReporter implements ReporterInterface
 {
     public function report(string $identifier, Throwable $throwable, ?array $metadata = null)
     {
-        dd($throwable);
+        // This is the default reported that does nothing
     }
 }
