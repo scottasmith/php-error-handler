@@ -36,7 +36,7 @@ To use the bugsnag reporter you need to install and setup the `bugsnag/bugsnag-l
 The `app\Exceptions\Handler.php` needs to extend the `ScottSmith\ErrorHandler\Integrations\Laravel\Handler` class.
 
 By default, the reporter to be used is the `ScottSmith\ErrorHandler\Reporter\NullReporter`.
-To update the reported, simply update the published config `config\errror-handler.php`:
+To update the reported, simply update the published config `config\error-handler.php`:
 ```
     'reporter' => \ScottSmith\ErrorHandler\Reporter\LaravelBugsnagReporter::class,
 ```
