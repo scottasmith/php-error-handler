@@ -33,7 +33,7 @@ This allows to update the reporter the ModuleServiceProvider binds as ReporterIn
 
 To use the bugsnag reporter you need to install and setup the `bugsnag/bugsnag-laravel` package.
 
-The `app\Exceptions\Handler.php` needs to extend the `ScottSmith\ErrorHandler\Integrations\Laravel\Handler` class.
+The `app\Exceptions\Handler.php` needs to extend the `ScottSmith\ErrorHandler\Integration\Laravel\Handler` class.
 
 By default, the reporter to be used is the `ScottSmith\ErrorHandler\Reporter\NullReporter`.
 To update the reported, simply update the published config `config\error-handler.php`:
