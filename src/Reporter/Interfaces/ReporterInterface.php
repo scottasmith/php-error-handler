@@ -10,9 +10,9 @@ interface ReporterInterface
 {
     /**
      * @param string $identifier
-     * @param Throwable $exception
+     * @param Throwable $throwable
      * @param array|null $metadata
      * @return mixed
      */
-    public function report(string $identifier, Throwable $exception, ?array $metadata = null);
+    public function report(string $identifier, Throwable $throwable, ?array $metadata = null);
 }

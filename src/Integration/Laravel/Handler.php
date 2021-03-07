@@ -7,6 +7,7 @@ namespace ScottSmith\ErrorHandler\Integration\Laravel;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use ScottSmith\ErrorHandler\ExceptionFormatter;
 use ScottSmith\ErrorHandler\Identifier;
 use ScottSmith\ErrorHandler\Reporter\Interfaces\ReporterInterface;
@@ -83,6 +84,10 @@ class Handler extends ExceptionHandler
             $response->headers->set('X-Error', $message);
         }
 
+        $validationException = $throwable instanceof ValidationException
+            ? $throwable->errors()
+            : null;
+
         if ($request->wantsJson()) {
             $responseData = [
                 'error' => [
@@ -90,7 +95,7 @@ class Handler extends ExceptionHandler
                     'code'           => $errorCode,
                     'httpStatusCode' => $response->getStatusCode(),
                     'identifier'     => $this->identifier,
-                    'fields'         => ExceptionFormatter::getValidationException($throwable),
+                    'fields'         => $validationException,
                     'stacktrace'     => ExceptionFormatter::getStackTrace($throwable, $isDebug),
                 ],
                 'data' => null,

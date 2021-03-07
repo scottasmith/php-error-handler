@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ScottSmith\ErrorHandler;
 
-use Illuminate\Validation\ValidationException;
 use ScottSmith\ErrorHandler\Exception\ApplicationException;
 use Throwable;
 
@@ -48,18 +47,5 @@ class ExceptionFormatter
     public static function getStackTrace(Throwable $throwable, bool $isDebug = false): ?array
     {
         return $isDebug ? explode("\n", $throwable->getTraceAsString()) : null;
-    }
-
-    /**
-     * Return the errors from the validation exception fields if applicable
-     *
-     * @param Throwable $throwable
-     * @return array|null
-     */
-    public static function getValidationException(Throwable $throwable): ?array
-    {
-        return $throwable instanceof ValidationException
-            ? $throwable->errors()
-            : null;
     }
 }

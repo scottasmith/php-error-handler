@@ -6,7 +6,8 @@
     "homepage": "https://github.com/scottasmith/php-error-handler",
 
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "ext-openssl": "*"
     },
 
     "autoload": {
@@ -24,6 +25,9 @@
             "providers": [
                 "ScottSmith\\ErrorHandler\\Integration\\Laravel\\ModuleServiceProvider"
             ]
+        },
+        "laminas": {
+            "config-provider": "ScottSmith\\ErrorHandler\\Integration\\Mezzio\\ConfigProvider"
         }
     }
 }

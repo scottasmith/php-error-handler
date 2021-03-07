@@ -58,3 +58,71 @@ class AppServiceProvider extends ServiceProvider
     }
 }
 ```
+
+# Laminas/Mezzio Integration
+## Configuration
+If you are using the `laminas-component-installer` the module `ConfigProvider` should be added automatically.
+If not then you will have to add the `ScottSmith\ErrorHandler\Integration\Mezzio\ConfigProvider` manually.
+eg. config.php
+```
+$aggregator = new ConfigAggregator(
+    [
+        \ScottSmith\ErrorHandler\Integration\Laminas\ConfigProvider::class
+        ...
+    ]
+);
+```
+
+You will then need to create configuration for the service manager. This README only covers the laminas service-manager.
+Create a file named `config\autoload\error.global.php`
+```
+<?php
+use Mezzio\Middleware\ErrorResponseGenerator;
+use ScottSmith\ErrorHandler\Integration\Laminas\ErrorResponseGeneratorFactory;
+
+return [
+    'dependencies' => [
+        'factories' => [
+            ErrorResponseGenerator::class => ErrorResponseGeneratorFactory::class,
+        ],
+    ],
+    
+    'error_handler' => [
+        // Is the application in debug mode
+        'debug' => false,
+
+        // Which reporter to use
+        'reporter' => \ScottSmith\ErrorHandler\Reporter\LoggerReporter::class,
+        
+        // The templates to use if you have initialized templating with Mezzio\Template\TemplateRendererInterface 
+        'template_404'   => 'error::404',
+        'template_error' => 'error::error',
+    ],
+];
+```
+
+If the reporter extends `AbstractReporter` then you can extend the global data inside your Provider:
+```
+<?php
+use Mezzio\Middleware\ErrorResponseGenerator;
+use ScottSmith\ErrorHandler\Integration\Laminas\ErrorResponseGeneratorFactory;
+
+return [
+    'dependencies' => [
+        'initializers' => [
+            function(ContainerInterface $container, $instance) {
+                if (!$instance instanceof \ScottSmith\ErrorHandler\Reporter\AbstractReporter) {
+                    return;
+                }
+                
+                $instance->registerMetaGenerator(new class implements MetaGeneratorInterface {
+                    public function generateMetaData(): array
+                    {
+                        return ['some' => 'data'];
+                    }
+                }
+            }
+        ]
+    ],
+];
+```
