@@ -2,7 +2,7 @@
 
 ## Installation
 ```
-composer require scottsmith/error-reporter
+composer require scottsmith/error-handler
 ```
 
 ## Configuration
