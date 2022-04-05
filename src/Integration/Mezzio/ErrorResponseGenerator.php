@@ -110,7 +110,7 @@ final class ErrorResponseGenerator
         ];
 
         if ($this->isDebug) {
-            $jsonData['error']['meta'] = $exception->getMetaData();
+            $jsonData['error']['meta'] = ($exception instanceof ApplicationException) ? $exception->getMetaData() : [];
         }
 
         return new JsonResponse($jsonData, $response->getStatusCode(), $response->getHeaders());
