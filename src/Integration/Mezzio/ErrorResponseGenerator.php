@@ -61,10 +61,6 @@ final class ErrorResponseGenerator
         ServerRequestInterface $request,
         ResponseInterface $response
     ): ResponseInterface {
-        if (!$exception instanceof ApplicationException) {
-            $exception = new ApplicationException('Application Exception', 500, $exception);
-        }
-
         $identifier = $this->errorHandler->report($exception);
 
         $errorCode = ExceptionFormatter::getCode($exception);
@@ -96,7 +92,7 @@ final class ErrorResponseGenerator
     }
 
     private function createJsonResponse(
-        ApplicationException $exception,
+        Throwable $exception,
         string $identifier,
         string $message,
         int $errorCode,
@@ -121,7 +117,7 @@ final class ErrorResponseGenerator
     }
 
     private function createTemplateResponse(
-        ApplicationException $exception,
+        Throwable $exception,
         string $identifier,
         ServerRequestInterface $request,
         ResponseInterface $response
@@ -135,7 +131,7 @@ final class ErrorResponseGenerator
                 'status' => $response->getStatusCode(),
                 'reason' => $response->getReasonPhrase(),
                 'stacktrace' => ExceptionFormatter::getStackTrace($exception, $this->isDebug),
-                'meta' => $exception->getMetaData(),
+                'meta' => ($exception instanceof ApplicationException) ? $exception->getMetaData() : [],
                 'request' => $request,
                 'response' => $response,
                 'layout' => $this->layout,
