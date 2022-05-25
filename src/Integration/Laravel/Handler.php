@@ -78,7 +78,7 @@ class Handler extends ExceptionHandler
 
         $response = parent::render($request, $throwable);
         $response->headers->set('X-Identifier', $this->identifier);
-        $response->headers->set('X-Error-Code', $errorCode);
+        $response->headers->set('X-Error-Code', (string) $errorCode);
 
         if ($isDebug) {
             $response->headers->set('X-Error', $message);
