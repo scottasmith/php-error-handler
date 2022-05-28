@@ -50,6 +50,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $throwable)
     {
+        if ($this->shouldntReport($this->mapException($throwable))) {
+            return;
+        }
+
         $this->identifier = Identifier::getIdentifier();
 
         if ($this->container->has(ReporterInterface::class)) {
@@ -72,7 +76,11 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $throwable)
     {
-        $isDebug = (bool) env('APP_DEBUG', false);
+            if ($this->shouldntReport($this->mapException($throwable))) {
+            return parent::render($request, $throwable);
+        }
+
+        $isDebug = (bool) config('app.debug', false);
         $errorCode = ExceptionFormatter::getCode($throwable);
         $message = ExceptionFormatter::getMessage($throwable, $isDebug);
 
